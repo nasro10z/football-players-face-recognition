@@ -1,6 +1,19 @@
+from html import escape
+from pathlib import Path
+
+import numpy as np
 import streamlit as st
 from PIL import Image, UnidentifiedImageError
 
+
+class_names = np.load(Path(__file__).with_name("classes.npy"), allow_pickle=False)
+display_names = {
+    "kylian_mbappe": "Kylian Mbappé",
+}
+player_names = [
+    display_names.get(str(name), str(name).replace("_", " ").title())
+    for name in class_names
+]
 
 st.set_page_config(
     page_title="ScoutIQ | Player Recognition Lab",
@@ -47,6 +60,8 @@ st.markdown(
     .proof-row { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 30px; color: #858f87; font-size: 11px; font-weight: 800; }
     .proof-row span { display: inline-flex; align-items: center; gap: 8px; }
     .proof-mark { color: #c1ff35; font-size: 15px; }
+    .roster-label { margin-top: 30px; color: #c1ff35; font-size: 10px; font-weight: 800; }
+    .roster-names { max-width: 510px; margin: 7px 0 0; color: #aab3ac; font-size: 13px; line-height: 1.8; }
     .st-key-match_panel { padding: 24px; background: #0e1913; border: 1px solid #202c24; border-radius: 24px; }
     .panel-heading { margin: 0 0 3px; color: #f0f3ee; font-size: 16px; font-weight: 800; }
     .panel-help { margin: 0 0 16px; color: #768178; font-size: 12px; }
@@ -75,6 +90,7 @@ st.markdown(
         .hero-copy { margin-top: 18px; font-size: 15px; }
         .eyebrow { margin-bottom: 20px; }
         .proof-row { margin-top: 20px; gap: 15px; }
+        .roster-label { margin-top: 22px; }
         .st-key-match_panel { padding: 18px; border-radius: 20px; }
         .st-key-match_panel [data-testid="stFileUploader"] section { min-height: 220px; }
     }
@@ -113,9 +129,12 @@ with intro:
         unsafe_allow_html=True,
     )
     st.markdown(
-        '<div class="proof-row"><span><b class="proof-mark">✦</b> 7 PLAYER CLASSES</span><span><b class="proof-mark">◈</b> UPLOADS NOT SAVED</span></div>',
+        f'<div class="proof-row"><span><b class="proof-mark">✦</b> {len(player_names)} PLAYER CLASSES</span><span><b class="proof-mark">◈</b> UPLOADS NOT SAVED</span></div>',
         unsafe_allow_html=True,
     )
+    st.markdown('<div class="roster-label">MODEL ROSTER</div>', unsafe_allow_html=True)
+    roster = ", ".join(escape(name) for name in player_names)
+    st.markdown(f'<p class="roster-names">{roster}</p>', unsafe_allow_html=True)
 
 if "prediction_result" not in st.session_state:
     st.session_state.prediction_result = None
