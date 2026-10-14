@@ -1,0 +1,11 @@
+[theme]
+base = "dark"
+primaryColor = "#B8F137"
+backgroundColor = "#07100B"
+secondaryBackgroundColor = "#0E1913"
+textColor = "#F4F6F1"
+font = "'DM Sans':https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap"
+headingFont = "'Archivo Black':https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap"
+baseRadius = "16px"
+buttonRadius = "12px"
+showWidgetBorder = true

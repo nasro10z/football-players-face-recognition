@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.env
+
+# Test uploads and generated datasets
+test_images/*
+!test_images/.gitkeep
+dataset/raw/
+dataset/cropped_faces/
+
+# Notebook and editor state
+.ipynb_checkpoints/
+.vscode/
+
+#agent file .md
+.github
